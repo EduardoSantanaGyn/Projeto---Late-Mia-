@@ -1,0 +1,1 @@
+from latemia_app import app

@@ -1,0 +1,361 @@
+document.addEventListener('DOMContentLoaded', function() {
+  // 1. Efeito de digitação no título
+  const heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    const text = heroTitle.dataset.text;
+    let i = 0;
+    heroTitle.textContent = '';
+    
+    function typeWriter() {
+      if (i < text.length) {
+        heroTitle.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+      } else {
+        setTimeout(() => {
+          heroTitle.classList.add('pulse-animation');
+        }, 1000);
+      }
+    }
+    typeWriter();
+  }
+
+  // 2. Navegação entre páginas
+  const links = document.querySelectorAll(".nav-link");
+  const pages = document.querySelectorAll(".page");
+  
+  links.forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      
+      const target = link.getAttribute("data-target");
+      
+      pages.forEach(p => {
+        p.hidden = true;
+        p.classList.remove("active");
+      });
+      
+      links.forEach(l => l.classList.remove("active"));
+      
+      document.getElementById(target).hidden = false;
+      document.getElementById(target).classList.add("active");
+      link.classList.add("active");
+      
+      // Atualizar breadcrumb
+      const breadcrumb = document.querySelector('.breadcrumb-item');
+      breadcrumb.textContent = link.querySelector('.nav-text').textContent;
+    });
+  });
+
+  // 3. Drag and Drop para agendamentos
+  const appointments = document.querySelectorAll('.appointment');
+  const appointmentContainer = document.querySelector('.upcoming-appointments');
+  
+  if (appointmentContainer) {
+    appointmentContainer.addEventListener('dragover', e => {
+      e.preventDefault();
+      const afterElement = getDragAfterElement(appointmentContainer, e.clientY);
+      const draggable = document.querySelector('.dragging');
+      
+      if (afterElement == null) {
+        appointmentContainer.appendChild(draggable);
+      } else {
+        appointmentContainer.insertBefore(draggable, afterElement);
+      }
+    });
+  }
+
+  appointments.forEach(appointment => {
+    appointment.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', appointment.id);
+      setTimeout(() => {
+        appointment.classList.add('dragging');
+      }, 0);
+    });
+    
+    appointment.addEventListener('dragend', () => {
+      appointment.classList.remove('dragging');
+    });
+  });
+
+  function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.appointment:not(.dragging)')];
+    
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect();
+      const offset = y - box.top - box.height / 2;
+      
+      if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child };
+      } else {
+        return closest;
+      }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+  }
+
+  // 4. Confirmação animada ao deletar
+  const deleteButtons = document.querySelectorAll('.delete-btn');
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const item = this.closest('.deletable-item');
+      item.style.transform = 'scale(0.95)';
+      item.style.opacity = '0.8';
+      
+      const confirmDiv = document.createElement('div');
+      confirmDiv.className = 'confirm-delete';
+      confirmDiv.innerHTML = `
+        <p>Tem certeza?</p>
+        <div>
+          <button class="confirm-yes">Sim</button>
+          <button class="confirm-no">Não</button>
+        </div>
+      `;
+      
+      item.appendChild(confirmDiv);
+      
+      confirmDiv.querySelector('.confirm-yes').addEventListener('click', () => {
+        item.style.animation = 'fadeOut 0.3s forwards';
+        setTimeout(() => {
+          item.remove();
+        }, 300);
+      });
+      
+      confirmDiv.querySelector('.confirm-no').addEventListener('click', () => {
+        item.style.transform = '';
+        item.style.opacity = '';
+        confirmDiv.remove();
+      });
+    });
+  });
+
+
+  // 6. Efeito de digitação nos inputs de busca
+  const searchInputs = document.querySelectorAll('.search-input');
+  searchInputs.forEach(input => {
+    const placeholderText = input.getAttribute('placeholder');
+    input.setAttribute('placeholder', '');
+    
+    let i = 0;
+    function typePlaceholder() {
+      if (i < placeholderText.length) {
+        input.placeholder += placeholderText.charAt(i);
+        i++;
+        setTimeout(typePlaceholder, 50);
+      } else {
+        setTimeout(() => {
+          input.placeholder = '';
+          i = 0;
+          typePlaceholder();
+        }, 2000);
+      }
+    }
+    typePlaceholder();
+  });
+
+  // 7. Animação de carregamento para botões
+  const loadingButtons = document.querySelectorAll('.btn-loading');
+  loadingButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const originalText = this.innerHTML;
+      this.innerHTML = `
+        <span class="loading-spinner"></span>
+        Processando...
+      `;
+      this.disabled = true;
+      
+      // Simular operação assíncrona
+      setTimeout(() => {
+        this.innerHTML = originalText;
+        this.disabled = false;
+        
+        // Adicionar efeito de confirmação
+        this.classList.add('btn-success');
+        setTimeout(() => {
+          this.classList.remove('btn-success');
+        }, 2000);
+      }, 2000);
+    });
+  });
+
+  // 8. Carrossel interativo
+  const carousels = document.querySelectorAll('.carousel');
+  carousels.forEach(carousel => {
+    const items = carousel.querySelectorAll('.carousel-item');
+    let currentIndex = 0;
+    
+    function showItem(index) {
+      items.forEach((item, i) => {
+        item.classList.toggle('active', i === index);
+      });
+    }
+    
+    carousel.querySelector('.carousel-next').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % items.length;
+      showItem(currentIndex);
+    });
+    
+    carousel.querySelector('.carousel-prev').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + items.length) % items.length;
+      showItem(currentIndex);
+    });
+    
+    // Autoplay
+    let interval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % items.length;
+      showItem(currentIndex);
+    }, 5000);
+    
+    carousel.addEventListener('mouseenter', () => {
+      clearInterval(interval);
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+      interval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % items.length;
+        showItem(currentIndex);
+      }, 5000);
+    });
+  });
+
+  // 9. Validação de formulário com feedback visual
+  const forms = document.querySelectorAll('.needs-validation');
+  forms.forEach(form => {
+    form.addEventListener('submit', function(event) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Adicionar efeito de shake nos campos inválidos
+        const invalidFields = form.querySelectorAll(':invalid');
+        invalidFields.forEach(field => {
+          field.classList.add('is-invalid');
+          field.style.animation = 'shake 0.5s';
+          
+          setTimeout(() => {
+            field.style.animation = '';
+          }, 500);
+        });
+      }
+      
+      form.classList.add('was-validated');
+    }, false);
+  });
+
+  // 10. Efeito de onda ao clicar em botões
+  function createRipple(event) {
+    const button = event.currentTarget;
+    const circle = document.createElement('span');
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+    
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+    circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+    circle.classList.add('ripple-effect');
+    
+    const ripple = button.getElementsByClassName('ripple-effect')[0];
+    if (ripple) {
+      ripple.remove();
+    }
+    
+    button.appendChild(circle);
+  }
+  
+  const rippleButtons = document.querySelectorAll('.ripple');
+  rippleButtons.forEach(button => {
+    button.addEventListener('click', createRipple);
+  });
+
+  // 11. Toggle sidebar
+  const sidebarToggle = document.querySelector('.sidebar-toggle');
+  const sidebar = document.querySelector('.sidebar');
+  const content = document.querySelector('.content');
+  
+  sidebarToggle.addEventListener('click', function() {
+    sidebar.classList.toggle('sidebar-collapsed');
+    content.classList.toggle('content-collapsed');
+  });
+
+  // 12. Simular notificações
+  const notificationBtn = document.querySelector('.notification-btn');
+  notificationBtn.addEventListener('click', function() {
+    // Criar notificação flutuante
+    const notification = document.createElement('div');
+    notification.className = 'floating-notification';
+    notification.innerHTML = `
+      <div class="notification-content">
+        <i class="fas fa-bell"></i>
+        <p>Você tem 2 novas notificações!</p>
+      </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }, 3000);
+  });
+
+  // 13. Efeitos hover nos cards
+  const statCards = document.querySelectorAll('.stat-card, .card');
+  statCards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-5px)';
+      this.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.2)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+      this.style.boxShadow = '';
+    });
+  });
+});
+
+// Estilo dinâmico para notificações flutuantes
+const style = document.createElement('style');
+style.textContent = `
+  .floating-notification {
+    position: fixed;
+    top: 20px;
+    right: -300px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    transition: right 0.3s ease;
+  }
+  
+  .floating-notification.show {
+    right: 20px;
+  }
+  
+  .notification-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .notification-content i {
+    color: var(--laranja);
+    margin-right: 10px;
+    font-size: 20px;
+  }
+  
+  .notification-content p {
+    margin: 0;
+    font-weight: 600;
+  }
+`;
+document.head.appendChild(style);

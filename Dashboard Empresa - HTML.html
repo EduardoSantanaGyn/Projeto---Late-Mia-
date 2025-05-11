@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Late & Mia - Sistema Premium</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="Dashboard Empresa - CSS.css">
+</head>
+<body>
+  <div class="layout">
+    <!-- MENU LATERAL -->
+    <aside class="sidebar" aria-label="Menu principal">
+      <button class="sidebar-toggle ripple">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <div class="logo-container">
+        <img src="/Users/Vinicius/Documents/Logo Late & Mia.png"Late & Mia - Logo" class="logo float-animation">
+        <h1 class="hero-title" data-text="Late & Mia">Late & Mia</h1>
+      </div>
+      
+      <nav aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="#dashboard" class="nav-link active ripple" data-target="dashboard" aria-current="page">
+              <i class="fas fa-home nav-icon" aria-hidden="true"></i>
+              <span class="nav-text">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#agendamentos" class="nav-link ripple" data-target="agendamentos">
+              <i class="fas fa-calendar-alt nav-icon" aria-hidden="true"></i>
+              <span class="nav-text">Agendamentos</span>
+              <span class="badge pulse-animation">3</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#clientes" class="nav-link ripple" data-target="clientes">
+              <i class="fas fa-user-friends nav-icon" aria-hidden="true"></i>
+              <span class="nav-text">Clientes</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#servicos" class="nav-link ripple" data-target="servicos">
+              <i class="fas fa-cut nav-icon" aria-hidden="true"></i>
+              <span class="nav-text">Serviços</span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#equipe" class="nav-link ripple dropdown-toggle" data-target="equipe">
+              <i class="fas fa-users nav-icon" aria-hidden="true"></i>
+              <span class="nav-text">Equipe</span>
+              <i class="fas fa-chevron-down dropdown-arrow"></i>
+            </a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Veterinários</a>
+              <a href="#" class="dropdown-item">Tosadores</a>
+              <a href="#" class="dropdown-item">Atendentes</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="#configuracoes" class="nav-link ripple" data-target="configuracoes">
+              <i class="fas fa-cog nav-icon" aria-hidden="true"></i>
+              <span class="nav-text">Configurações</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <button class="logout-btn btn-interactive ripple">
+          <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+          <span>Sair</span>
+        </button>
+        <div class="user-profile ripple">
+          <img src="Documents/administador.jpg" alt="Foto do usuário" class="user-avatar">
+          <span class="user-name">Admin</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="content" id="main-content">
+      <header class="topbar">
+        <div class="breadcrumbs">
+          <span class="breadcrumb-item">Dashboard</span>
+        </div>
+        
+        <div class="topbar-actions">
+          <button class="notification-btn ripple notification-bell" aria-label="Notificações">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge pulse-animation">2</span>
+          </button>
+          
+          <div class="search-container">
+            <input type="search" class="search-input input-animated" placeholder="Pesquisar..." aria-label="Pesquisar no sistema">
+            <button class="search-btn ripple" aria-label="Buscar">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="page-container">
+        <section id="dashboard" class="page active" aria-labelledby="dashboard-heading">
+          <h2 id="dashboard-heading">Dashboard</h2>
+          <div class="stats-grid">
+            <div class="stat-card card-hover ripple">
+              <div class="stat-icon bg-primary animated-gradient">
+                <i class="fas fa-paw"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Pets Atendidos</h3>
+                <p class="stat-value">24</p>
+                <p class="stat-change positive">+12% este mês</p>
+              </div>
+            </div>
+            
+            <div class="stat-card card-hover ripple">
+              <div class="stat-icon bg-success animated-gradient">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Agendamentos</h3>
+                <p class="stat-value">15</p>
+                <p class="stat-change positive">+3 hoje</p>
+              </div>
+            </div>
+            
+            <div class="stat-card card-hover ripple">
+              <div class="stat-icon bg-warning animated-gradient">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Novos Clientes</h3>
+                <p class="stat-value">8</p>
+                <p class="stat-change positive">+2 esta semana</p>
+              </div>
+            </div>
+            
+          </div>
+          
+          <div class="dashboard-content">
+            <div class="recent-activity card card-hover">
+              <h3>Atividade Recente</h3>
+              <ul class="activity-list">
+                <li class="ripple">
+                  <i class="fas fa-bath activity-icon"></i>
+                  <div class="activity-details">
+                    <p>Banho no Thor</p>
+                    <small>10:30 AM - Hoje</small>
+                  </div>
+                </li>
+                <li class="ripple">
+                  <i class="fas fa-cut activity-icon"></i>
+                  <div class="activity-details">
+                    <p>Tosa na Luna</p>
+                    <small>Ontem - 14:15</small>
+                  </div>
+                </li>
+                <li class="ripple">
+                  <i class="fas fa-user-plus activity-icon"></i>
+                  <div class="activity-details">
+                    <p>Novo cliente cadastrado</p>
+                    <small>Ontem - 09:45</small>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="upcoming-appointments card card-hover">
+              <h3>Próximos Agendamentos</h3>
+              <div class="appointment ripple deletable-item" draggable="true">
+                <div class="pet-info">
+                  <img src="/Users/Vinicius/Documents/images.jpg" alt="Rex" class="pet-avatar zoom-in">
+                  <div>
+                    <p class="pet-name">Rex</p>
+                    <small>Golden Retriever</small>
+                  </div>
+                </div>
+                <div class="appointment-details">
+                  <p><i class="fas fa-calendar-day"></i> Amanhã, 15:00</p>
+                  <p><i class="fas fa-cut"></i> Banho e Tosa</p>
+                </div>
+                <button class="delete-btn btn-interactive">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="appointment ripple deletable-item" draggable="true">
+                <div class="pet-info">
+                  <img src="/Users/Vinicius/Documents/poodle.jpg" alt="Bella" class="pet-avatar zoom-in">
+                  <div>
+                    <p class="pet-name">Bella</p>
+                    <small>Poodle</small>
+                  </div>
+                </div>
+                <div class="appointment-details">
+                  <p><i class="fas fa-calendar-day"></i> Amanhã, 16:30</p>
+                  <p><i class="fas fa-bone"></i> Consulta</p>
+                </div>
+                <button class="delete-btn btn-interactive">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carrossel de Promoções -->
+          <div class="promo-carousel card">
+            <h3>Promoções em Destaque</h3>
+            <div class="carousel">
+              <div class="carousel-item active">
+                <div class="promo-card bg-primary">
+                  <h4>Banho Completo</h4>
+                  <p>20% OFF para novos clientes</p>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="promo-card bg-success">
+                  <h4>Pacote Mensal</h4>
+                  <p>4 banhos pelo preço de 3</p>
+                </div>
+              </div>
+              <div class="carousel-controls">
+                <button class="carousel-prev btn-interactive"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-next btn-interactive"><i class="fas fa-chevron-right"></i></button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="agendamentos" class="page" aria-labelledby="agendamentos-heading" hidden>
+          <h2 id="agendamentos-heading">Agendamentos</h2>
+          <div class="page-actions">
+            <button class="btn btn-primary btn-interactive btn-3d btn-loading">
+              <i class="fas fa-plus"></i> Novo Agendamento
+            </button>
+          </div>
+          <div class="card card-hover">
+            <p>Lista e formulário de agendamentos aqui.</p>
+          </div>
+        </section>
+
+        <section id="clientes" class="page" aria-labelledby="clientes-heading" hidden>
+          <h2 id="clientes-heading">Clientes</h2>
+          <div class="card card-hover">
+            <p>Lista de clientes cadastrados.</p>
+          </div>
+        </section>
+
+        <section id="servicos" class="page" aria-labelledby="servicos-heading" hidden>
+          <h2 id="servicos-heading">Serviços</h2>
+          <div class="card card-hover">
+            <p>Gerencie os serviços oferecidos.</p>
+          </div>
+        </section>
+
+        <section id="equipe" class="page" aria-labelledby="equipe-heading" hidden>
+          <h2 id="equipe-heading">Equipe</h2>
+          <div class="card card-hover">
+            <p>Informações sobre a equipe do petshop.</p>
+          </div>
+        </section>
+
+        <section id="configuracoes" class="page" aria-labelledby="configuracoes-heading" hidden>
+          <h2 id="configuracoes-heading">Configurações</h2>
+          <div class="card card-hover">
+            <form class="needs-validation" novalidate>
+              <div class="form-group">
+                <label for="notifications">Notificações por e-mail</label>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="notifications" checked>
+                  <span class="toggle-slider"></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="theme">Tema do Sistema</label>
+                <select id="theme" class="input-animated" required>
+                  <option value="">Selecione um tema</option>
+                  <option value="light">Claro</option>
+                  <option value="dark">Escuro</option>
+                  <option value="blue" selected>Azul (Padrão)</option>
+                </select>
+                <div class="invalid-feedback">
+                  Por favor, selecione um tema.
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-interactive btn-3d">
+                Salvar Configurações
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="Dashboard Empresa - JS"></script>
+</body>
+</html>
